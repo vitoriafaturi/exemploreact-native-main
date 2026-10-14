@@ -217,12 +217,12 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
   if (!permission.granted) {
     return (
       <View style={styles.container}>
-        <View className="bg-white rounded-2xl p-6 mx-6 items-center">
-          <Text className="text-5xl mb-4">📷</Text>
-          <Text className="text-xl font-bold text-gray-800 text-center mb-2">
+        <View className="bg-white/10 rounded-2xl p-6 mx-6 items-center">
+          
+          <Text className="text-xl font-bold text-white text-center mb-2">
             Acesso à Câmera
           </Text>
-          <Text className="text-sm text-gray-600 text-center mb-6">
+          <Text className="text-sm text-white/70 text-center mb-6">
             Precisamos de permissão para acessar sua câmera e capturar a foto de
             perfil. Seus dados permanecem armazenados apenas no seu dispositivo.
           </Text>
@@ -230,7 +230,7 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
           {/* Botão para solicitar permissão */}
           <TouchableOpacity
             onPress={requestPermission}
-            className="bg-indigo-600 px-6 py-3 rounded-xl mb-3 w-full"
+            className="bg-rose px-6 py-3 rounded-xl mb-3 w-full"
           >
             <Text className="text-white text-center font-semibold">
               Conceder Permissão
@@ -241,9 +241,9 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
           {!permission.canAskAgain && (
             <TouchableOpacity
               onPress={handleOpenSettings}
-              className="bg-gray-200 px-6 py-3 rounded-xl mb-3 w-full"
+              className="bg-white/20 px-6 py-3 rounded-xl mb-3 w-full"
             >
-              <Text className="text-gray-700 text-center font-semibold">
+              <Text className="text-white text-center font-semibold">
                 Abrir Configurações
               </Text>
             </TouchableOpacity>
@@ -251,7 +251,7 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
 
           {/* Botão para fechar sem conceder */}
           <TouchableOpacity onPress={onClose}>
-            <Text className="text-gray-500 text-sm">Cancelar</Text>
+            <Text className="text-white/70 text-sm">Cancelar</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -280,7 +280,7 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
               onPress={onClose}
               className="bg-black/50 w-10 h-10 rounded-full items-center justify-center"
             >
-              <Text className="text-white text-xl font-bold">✕</Text>
+              <Text className="text-white font-bold">Fechar</Text>
             </TouchableOpacity>
           </View>
 
@@ -292,10 +292,10 @@ export function CameraCapture({ onCapture, onClose }: CameraCaptureProps) {
             <TouchableOpacity
               onPress={handleCapture}
               disabled={capturing}
-              className="w-20 h-20 rounded-full bg-white border-4 border-gray-300 items-center justify-center"
+              className="w-20 h-20 rounded-full bg-white/10 border-4 border-white/20 items-center justify-center"
               style={{ opacity: capturing ? 0.5 : 1 }}
             >
-              <View className="w-16 h-16 rounded-full bg-white" />
+              <View className="w-16 h-16 rounded-full bg-white/10" />
             </TouchableOpacity>
 
             {capturing && (

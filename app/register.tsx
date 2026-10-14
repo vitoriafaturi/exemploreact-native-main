@@ -49,7 +49,8 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
+import { AUTH_DISABLED } from '../src/services/firebaseConfig';
 import { useAuthContext } from '../src/contexts/AuthContext';
 
 /**
@@ -62,6 +63,12 @@ import { useAuthContext } from '../src/contexts/AuthContext';
  * - Indicadores de loading
  */
 export default function RegisterScreen() {
+  // Sem Firebase configurado não há login: volta para a lista
+  if (AUTH_DISABLED) return <Redirect href="/" />;
+  return <RegisterForm />;
+}
+
+function RegisterForm() {
   const router = useRouter();
   const { signUp, loading: authLoading } = useAuthContext();
 
@@ -148,9 +155,9 @@ export default function RegisterScreen() {
    */
   if (authLoading) {
     return (
-      <View className="flex-1 items-center justify-center bg-gray-50">
-        <ActivityIndicator size="large" color="#4f46e5" />
-        <Text className="mt-4 text-gray-600">Verificando autenticação...</Text>
+      <View className="flex-1 items-center justify-center bg-navy">
+        <ActivityIndicator size="large" color="#d46c7f" />
+        <Text className="mt-4 text-white/70">Verificando autenticação...</Text>
       </View>
     );
   }
@@ -164,24 +171,24 @@ export default function RegisterScreen() {
         contentContainerClassName="flex-1"
         keyboardShouldPersistTaps="handled"
       >
-        <View className="flex-1 bg-gray-50 px-6 justify-center">
+        <View className="flex-1 bg-navy px-6 justify-center">
           {/* Cabeçalho */}
           <View className="mb-8">
-            <Text className="text-4xl font-bold text-gray-800 mb-2">
-              Criar conta 🚀
+            <Text className="text-4xl font-bold text-white mb-2">
+              Criar conta
             </Text>
-            <Text className="text-base text-gray-600">
+            <Text className="text-base text-white/70">
               Cadastre-se para começar a organizar suas tarefas
             </Text>
           </View>
 
           {/* Campo de Email */}
           <View className="mb-6">
-            <Text className="text-sm font-medium text-gray-700 mb-2">
+            <Text className="text-sm font-medium text-white mb-2">
               Email
             </Text>
             <TextInput
-              className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-base text-gray-800"
+              className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-base text-white"
               placeholder="seu@email.com"
               value={email}
               onChangeText={setEmail}
@@ -194,11 +201,11 @@ export default function RegisterScreen() {
 
           {/* Campo de Senha */}
           <View className="mb-6">
-            <Text className="text-sm font-medium text-gray-700 mb-2">
+            <Text className="text-sm font-medium text-white mb-2">
               Senha
             </Text>
             <TextInput
-              className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-base text-gray-800"
+              className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-base text-white"
               placeholder="Mínimo 6 caracteres"
               value={password}
               onChangeText={setPassword}
@@ -211,11 +218,11 @@ export default function RegisterScreen() {
 
           {/* Campo de Confirmação de Senha */}
           <View className="mb-6">
-            <Text className="text-sm font-medium text-gray-700 mb-2">
+            <Text className="text-sm font-medium text-white mb-2">
               Confirmar senha
             </Text>
             <TextInput
-              className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-base text-gray-800"
+              className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-base text-white"
               placeholder="Digite a senha novamente"
               value={confirmPassword}
               onChangeText={setConfirmPassword}
@@ -229,7 +236,7 @@ export default function RegisterScreen() {
           {/* Botão de Cadastro */}
           <TouchableOpacity
             className={`rounded-xl py-4 mb-6 ${
-              loading ? 'bg-indigo-400' : 'bg-indigo-600'
+              loading ? 'bg-rose/60' : 'bg-rose'
             }`}
             onPress={handleRegister}
             disabled={loading}
@@ -245,9 +252,9 @@ export default function RegisterScreen() {
 
           {/* Link para Login */}
           <View className="flex-row items-center justify-center">
-            <Text className="text-gray-600 text-sm">Já tem uma conta? </Text>
+            <Text className="text-white/70 text-sm">Já tem uma conta? </Text>
             <TouchableOpacity onPress={() => router.back()} disabled={loading}>
-              <Text className="text-indigo-600 text-sm font-semibold">
+              <Text className="text-rose text-sm font-semibold">
                 Entrar
               </Text>
             </TouchableOpacity>

@@ -49,7 +49,8 @@ import {
   ScrollView,
   Alert,
 } from 'react-native';
-import { useRouter } from 'expo-router';
+import { Redirect, useRouter } from 'expo-router';
+import { AUTH_DISABLED } from '../src/services/firebaseConfig';
 import { useAuthContext } from '../src/contexts/AuthContext';
 
 /**
@@ -63,6 +64,12 @@ import { useAuthContext } from '../src/contexts/AuthContext';
  * - Indicadores de loading
  */
 export default function LoginScreen() {
+  // Sem Firebase configurado não há login: volta para a lista
+  if (AUTH_DISABLED) return <Redirect href="/" />;
+  return <LoginForm />;
+}
+
+function LoginForm() {
   const router = useRouter();
   const {
     user,
@@ -181,9 +188,9 @@ export default function LoginScreen() {
    */
   if (authLoading) {
     return (
-      <View className="flex-1 items-center justify-center bg-gray-50">
-        <ActivityIndicator size="large" color="#4f46e5" />
-        <Text className="mt-4 text-gray-600">Verificando autenticação...</Text>
+      <View className="flex-1 items-center justify-center bg-navy">
+        <ActivityIndicator size="large" color="#d46c7f" />
+        <Text className="mt-4 text-white/70">Verificando autenticação...</Text>
       </View>
     );
   }
@@ -215,24 +222,24 @@ export default function LoginScreen() {
         contentContainerClassName="flex-1"
         keyboardShouldPersistTaps="handled"
       >
-        <View className="flex-1 bg-gray-50 px-6 justify-center">
+        <View className="flex-1 bg-navy px-6 justify-center">
           {/* Cabeçalho */}
           <View className="mb-8">
-            <Text className="text-4xl font-bold text-gray-800 mb-2">
-              Bem-vindo! 👋
+            <Text className="text-4xl font-bold text-white mb-2">
+              Bem-vindo!
             </Text>
-            <Text className="text-base text-gray-600">
+            <Text className="text-base text-white/70">
               Faça login para acessar suas tarefas
             </Text>
           </View>
 
           {/* Formulário de Email/Senha */}
           <View className="mb-6">
-            <Text className="text-sm font-medium text-gray-700 mb-2">
+            <Text className="text-sm font-medium text-white mb-2">
               Email
             </Text>
             <TextInput
-              className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-base text-gray-800"
+              className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-base text-white"
               placeholder="seu@email.com"
               value={email}
               onChangeText={setEmail}
@@ -244,11 +251,11 @@ export default function LoginScreen() {
           </View>
 
           <View className="mb-6">
-            <Text className="text-sm font-medium text-gray-700 mb-2">
+            <Text className="text-sm font-medium text-white mb-2">
               Senha
             </Text>
             <TextInput
-              className="bg-white border border-gray-300 rounded-xl px-4 py-3 text-base text-gray-800"
+              className="bg-white/10 border border-white/20 rounded-xl px-4 py-3 text-base text-white"
               placeholder="••••••••"
               value={password}
               onChangeText={setPassword}
@@ -262,7 +269,7 @@ export default function LoginScreen() {
           {/* Botão de Login com Email/Senha */}
           <TouchableOpacity
             className={`rounded-xl py-4 mb-4 ${
-              loading ? 'bg-indigo-400' : 'bg-indigo-600'
+              loading ? 'bg-rose/60' : 'bg-rose'
             }`}
             onPress={handleLogin}
             disabled={loading}
@@ -278,31 +285,31 @@ export default function LoginScreen() {
 
           {/* Divisor */}
           <View className="flex-row items-center my-6">
-            <View className="flex-1 h-px bg-gray-300" />
-            <Text className="mx-4 text-gray-500 text-sm">OU</Text>
-            <View className="flex-1 h-px bg-gray-300" />
+            <View className="flex-1 h-px bg-white/20" />
+            <Text className="mx-4 text-white/70 text-sm">OU</Text>
+            <View className="flex-1 h-px bg-white/20" />
           </View>
 
           {/* Botão de Login com Google */}
           <TouchableOpacity
-            className="bg-white border border-gray-300 rounded-xl py-4 mb-6 flex-row items-center justify-center"
+            className="bg-white/10 border border-white/20 rounded-xl py-4 mb-6 flex-row items-center justify-center"
             onPress={handleGoogleLogin}
             disabled={loading}
           >
-            <Text className="text-2xl mr-3">🔍</Text>
-            <Text className="text-gray-800 text-base font-semibold">
+            
+            <Text className="text-white text-base font-semibold">
               Entrar com Google
             </Text>
           </TouchableOpacity>
 
           {/* Link para Cadastro */}
           <View className="flex-row items-center justify-center">
-            <Text className="text-gray-600 text-sm">Não tem uma conta? </Text>
+            <Text className="text-white/70 text-sm">Não tem uma conta? </Text>
             <TouchableOpacity
               onPress={() => router.push('/register')}
               disabled={loading}
             >
-              <Text className="text-indigo-600 text-sm font-semibold">
+              <Text className="text-rose text-sm font-semibold">
                 Cadastre-se
               </Text>
             </TouchableOpacity>

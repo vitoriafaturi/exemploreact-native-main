@@ -218,9 +218,9 @@ export default function FormScreen() {
    */
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center bg-gray-50">
-        <ActivityIndicator size="large" color="#4f46e5" />
-        <Text className="mt-3 text-gray-500 text-sm">Carregando tarefa...</Text>
+      <View className="flex-1 items-center justify-center bg-navy">
+        <ActivityIndicator size="large" color="#d46c7f" />
+        <Text className="mt-3 text-white/70 text-sm">Carregando tarefa...</Text>
       </View>
     );
   }
@@ -238,7 +238,7 @@ export default function FormScreen() {
      */
     <KeyboardAvoidingView
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      className="flex-1 bg-gray-50"
+      className="flex-1 bg-navy"
     >
       {/*
        * ScrollView garante que o conteúdo seja rolável em telas menores.
@@ -252,15 +252,15 @@ export default function FormScreen() {
       >
         {/* ── CAMPO DE TÍTULO ─────────────────────────────────────── */}
         <View className="mb-5">
-          <Text className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">
+          <Text className="text-xs font-bold text-white/70 mb-2 uppercase tracking-widest">
             Título *
           </Text>
           <TextInput
             value={title}
             onChangeText={setTitle}
             placeholder="Ex: Estudar React Native"
-            placeholderTextColor="#9ca3af"
-            className="bg-white rounded-xl px-4 py-3 text-base text-gray-800 border border-gray-200"
+            placeholderTextColor="rgba(255,255,255,0.5)"
+            className="bg-white/10 rounded-xl px-4 py-3 text-base text-white border border-white/20"
             maxLength={100}
             returnKeyType="next"
             // `autoFocus` abre o teclado automaticamente ao entrar na tela
@@ -268,22 +268,22 @@ export default function FormScreen() {
             autoFocus={!isEditing}
           />
           {/* Contador de caracteres — ajuda o usuário a saber o limite */}
-          <Text className="text-xs text-gray-400 mt-1 text-right">
+          <Text className="text-xs text-white/50 mt-1 text-right">
             {title.length}/100
           </Text>
         </View>
 
         {/* ── CAMPO DE DESCRIÇÃO ──────────────────────────────────── */}
         <View className="mb-8">
-          <Text className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">
+          <Text className="text-xs font-bold text-white/70 mb-2 uppercase tracking-widest">
             Descrição (opcional)
           </Text>
           <TextInput
             value={description}
             onChangeText={setDescription}
             placeholder="Adicione detalhes sobre a tarefa..."
-            placeholderTextColor="#9ca3af"
-            className="bg-white rounded-xl px-4 py-3 text-base text-gray-800 border border-gray-200"
+            placeholderTextColor="rgba(255,255,255,0.5)"
+            className="bg-white/10 rounded-xl px-4 py-3 text-base text-white border border-white/20"
             multiline
             numberOfLines={4}
             // `textAlignVertical="top"` faz o texto começar do topo em Android
@@ -291,7 +291,7 @@ export default function FormScreen() {
             maxLength={500}
             style={{ minHeight: 100 }} // altura mínima para campo multiline
           />
-          <Text className="text-xs text-gray-400 mt-1 text-right">
+          <Text className="text-xs text-white/50 mt-1 text-right">
             {description.length}/500
           </Text>
         </View>
@@ -305,7 +305,7 @@ export default function FormScreen() {
           onPress={handleSave}
           disabled={saving}
           className={`rounded-xl py-4 items-center mb-4 ${
-            saving ? 'bg-indigo-300' : 'bg-indigo-600'
+            saving ? 'bg-rose/50' : 'bg-rose'
           }`}
           accessibilityRole="button"
           accessibilityLabel={
@@ -317,7 +317,7 @@ export default function FormScreen() {
             <ActivityIndicator color="#ffffff" />
           ) : (
             <Text className="text-white font-bold text-base">
-              {isEditing ? '💾 Salvar Alterações' : '✅ Adicionar Tarefa'}
+              {isEditing ? 'Salvar Alterações' : 'Adicionar Tarefa'}
             </Text>
           )}
         </TouchableOpacity>
@@ -330,7 +330,7 @@ export default function FormScreen() {
           accessibilityRole="button"
           accessibilityLabel="Cancelar e voltar"
         >
-          <Text className="text-gray-400 text-sm">Cancelar</Text>
+          <Text className="text-white/50 text-sm">Cancelar</Text>
         </TouchableOpacity>
       </ScrollView>
     </KeyboardAvoidingView>

@@ -238,9 +238,9 @@ export default function ProfileScreen() {
    */
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center bg-gray-50">
-        <ActivityIndicator size="large" color="#4f46e5" />
-        <Text className="mt-3 text-gray-500 text-sm">Carregando perfil...</Text>
+      <View className="flex-1 items-center justify-center bg-navy">
+        <ActivityIndicator size="large" color="#d46c7f" />
+        <Text className="mt-3 text-white/70 text-sm">Carregando perfil...</Text>
       </View>
     );
   }
@@ -257,7 +257,7 @@ export default function ProfileScreen() {
 
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="flex-1 bg-gray-50"
+        className="flex-1 bg-navy"
       >
         <ScrollView
           className="flex-1"
@@ -278,7 +278,7 @@ export default function ProfileScreen() {
           <View className="items-center mb-8">
             <TouchableOpacity
               onPress={handleOpenCamera}
-              className="w-32 h-32 rounded-full bg-gray-200 items-center justify-center overflow-hidden border-4 border-white shadow-lg"
+              className="w-32 h-32 rounded-full bg-white/20 items-center justify-center overflow-hidden border-4 border-white shadow-lg"
               activeOpacity={0.7}
             >
               {photoUri ? (
@@ -299,8 +299,8 @@ export default function ProfileScreen() {
                  * Ícone de câmera + texto instruindo o usuário.
                  */
                 <View className="items-center">
-                  <Text className="text-5xl mb-1">📷</Text>
-                  <Text className="text-xs text-gray-500 text-center px-2">
+                  
+                  <Text className="text-xs text-white/70 text-center px-2">
                     Adicionar{'\n'}Foto
                   </Text>
                 </View>
@@ -308,22 +308,22 @@ export default function ProfileScreen() {
             </TouchableOpacity>
 
             {/* Texto de instrução abaixo da foto */}
-            <Text className="text-xs text-gray-400 mt-2 text-center">
+            <Text className="text-xs text-white/50 mt-2 text-center">
               Toque para {photoUri ? 'alterar' : 'capturar'} sua foto
             </Text>
           </View>
 
           {/* ── CAMPO DE NOME ──────────────────────────────────────── */}
           <View className="mb-5">
-            <Text className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">
+            <Text className="text-xs font-bold text-white/70 mb-2 uppercase tracking-widest">
               Nome
             </Text>
             <TextInput
               value={name}
               onChangeText={setName}
               placeholder="Seu nome completo"
-              placeholderTextColor="#9ca3af"
-              className="bg-white rounded-xl px-4 py-3 text-base text-gray-800 border border-gray-200"
+              placeholderTextColor="rgba(255,255,255,0.5)"
+              className="bg-white/10 rounded-xl px-4 py-3 text-base text-white border border-white/20"
               maxLength={100}
               returnKeyType="next"
               autoCapitalize="words" // Capitaliza primeira letra de cada palavra
@@ -332,15 +332,15 @@ export default function ProfileScreen() {
 
           {/* ── CAMPO DE EMAIL ─────────────────────────────────────── */}
           <View className="mb-8">
-            <Text className="text-xs font-bold text-gray-500 mb-2 uppercase tracking-widest">
+            <Text className="text-xs font-bold text-white/70 mb-2 uppercase tracking-widest">
               Email
             </Text>
             <TextInput
               value={email}
               onChangeText={setEmail}
               placeholder="seu.email@exemplo.com"
-              placeholderTextColor="#9ca3af"
-              className="bg-white rounded-xl px-4 py-3 text-base text-gray-800 border border-gray-200"
+              placeholderTextColor="rgba(255,255,255,0.5)"
+              className="bg-white/10 rounded-xl px-4 py-3 text-base text-white border border-white/20"
               maxLength={100}
               keyboardType="email-address" // Teclado otimizado para email
               autoCapitalize="none" // Não capitaliza (emails são lowercase)
@@ -354,7 +354,7 @@ export default function ProfileScreen() {
             onPress={handleSave}
             disabled={saving}
             className={`rounded-xl py-4 items-center ${
-              saving ? 'bg-indigo-300' : 'bg-indigo-600'
+              saving ? 'bg-rose/50' : 'bg-rose'
             }`}
             accessibilityRole="button"
             accessibilityLabel="Salvar perfil"
@@ -363,7 +363,7 @@ export default function ProfileScreen() {
               <ActivityIndicator color="#ffffff" />
             ) : (
               <Text className="text-white font-bold text-base">
-                💾 Salvar Perfil
+                Salvar Perfil
               </Text>
             )}
           </TouchableOpacity>

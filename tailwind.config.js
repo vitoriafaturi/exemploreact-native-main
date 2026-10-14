@@ -35,9 +35,10 @@ module.exports = {
     extend: {
       // Aqui você pode adicionar cores, espaçamentos, fontes customizados.
       // Exemplo:
-      // colors: {
-      //   primary: '#4f46e5',
-      // }
+      colors: {
+        navy: '#2d2f42',
+        rose: '#d46c7f',
+      },
     },
   },
 

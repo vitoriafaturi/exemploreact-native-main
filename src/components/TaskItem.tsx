@@ -33,6 +33,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
 import { Task } from '../types/task';
 
 // =============================================================================
@@ -133,15 +134,13 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
 
   return (
     // Card com sombra leve para dar profundidade visual
-    <View className="bg-white rounded-2xl mx-4 mb-3 p-4 shadow-sm flex-row items-start">
+    <View className="bg-white/10 rounded-2xl mx-4 mb-3 p-4 shadow-sm flex-row items-start">
       {/* ── CHECKBOX DE CONCLUSÃO ─────────────────────────────────── */}
       <TouchableOpacity
         onPress={() => onToggle(task.id, task.completed)}
         // Círculo: verde preenchido quando concluída, apenas borda quando pendente
         className={`w-6 h-6 rounded-full border-2 mr-3 mt-1 items-center justify-center flex-shrink-0 ${
-          isCompleted
-            ? 'bg-green-500 border-green-500'
-            : 'border-gray-300 bg-white'
+          isCompleted ? 'bg-rose border-rose' : 'border-white/20 bg-white/10'
         }`}
         accessibilityLabel={
           isCompleted ? 'Marcar como pendente' : 'Marcar como concluída'
@@ -150,7 +149,7 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         accessibilityState={{ checked: isCompleted }}
       >
         {/* Marca de seleção — só visível quando concluída */}
-        {isCompleted && <Text className="text-white text-xs font-bold">✓</Text>}
+        {isCompleted && <Ionicons name="checkmark" size={16} color="#ffffff" />}
       </TouchableOpacity>
 
       {/* ── CONTEÚDO DA TAREFA ────────────────────────────────────── */}
@@ -159,7 +158,7 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         {/* Título — riscado e cinza quando concluída */}
         <Text
           className={`text-base font-semibold leading-5 ${
-            isCompleted ? 'line-through text-gray-400' : 'text-gray-800'
+            isCompleted ? 'line-through text-white/50' : 'text-white'
           }`}
           numberOfLines={2}
         >
@@ -170,7 +169,7 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         {task.description ? (
           <Text
             className={`text-sm mt-1 leading-4 ${
-              isCompleted ? 'text-gray-300' : 'text-gray-500'
+              isCompleted ? 'text-white/40' : 'text-white/70'
             }`}
             numberOfLines={3}
           >
@@ -179,7 +178,7 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         ) : null}
 
         {/* Data de criação formatada */}
-        <Text className="text-xs text-gray-300 mt-2">
+        <Text className="text-xs text-white/40 mt-2">
           {formatDate(task.createdAt)}
         </Text>
       </View>
@@ -189,21 +188,21 @@ export function TaskItem({ task, onToggle, onDelete }: TaskItemProps) {
         {/* Botão Editar */}
         <TouchableOpacity
           onPress={handleEdit}
-          className="w-9 h-9 rounded-xl bg-indigo-50 items-center justify-center"
+          className="w-9 h-9 rounded-xl bg-white/10 items-center justify-center"
           accessibilityLabel={`Editar tarefa ${task.title}`}
           accessibilityRole="button"
         >
-          <Text className="text-base">✏️</Text>
+          <Ionicons name="pencil" size={18} color="#ffffff" />
         </TouchableOpacity>
 
         {/* Botão Excluir */}
         <TouchableOpacity
           onPress={handleDelete}
-          className="w-9 h-9 rounded-xl bg-red-50 items-center justify-center"
+          className="w-9 h-9 rounded-xl bg-white/10 items-center justify-center"
           accessibilityLabel={`Excluir tarefa ${task.title}`}
           accessibilityRole="button"
         >
-          <Text className="text-base">🗑️</Text>
+          <Ionicons name="trash" size={18} color="#ffffff" />
         </TouchableOpacity>
       </View>
     </View>

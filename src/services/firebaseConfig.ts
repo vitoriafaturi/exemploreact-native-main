@@ -100,7 +100,13 @@ const firebaseConfig = {
  * Por isso este arquivo exporta instâncias já inicializadas — outros
  * módulos importam `auth` pronto para uso, sem risco de duplicação.
  */
-const app = initializeApp(firebaseConfig);
+// Sem API key (.env ausente) o Firebase lançaria auth/invalid-api-key no import.
+// Nesse caso o app roda em modo "sem login" (veja app/_layout.tsx).
+export const AUTH_DISABLED = !firebaseConfig.apiKey;
+
+const app = AUTH_DISABLED
+  ? (null as unknown as ReturnType<typeof initializeApp>)
+  : initializeApp(firebaseConfig);
 
 /**
  * Inicializa o Firebase Auth com persistência via AsyncStorage.
@@ -127,9 +133,11 @@ const app = initializeApp(firebaseConfig);
  * Além disso, o token JWT tem expiração (padrão: 1 hora), e o Firebase
  * usa refresh tokens para renovar automaticamente.
  */
-export const auth: Auth = initializeAuth(app, {
-  persistence: getReactNativePersistence(AsyncStorage),
-});
+export const auth: Auth = AUTH_DISABLED
+  ? (null as unknown as Auth)
+  : initializeAuth(app, {
+      persistence: getReactNativePersistence(AsyncStorage),
+    });
 
 /**
  * Exporta a instância do Firebase App (caso seja necessária no futuro).

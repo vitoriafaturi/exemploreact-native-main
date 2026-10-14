@@ -58,7 +58,11 @@ import '../global.css';
 
 import { useEffect } from 'react';
 import { Stack, useRouter, useSegments } from 'expo-router';
-import { AuthProvider, useAuthContext } from '../src/contexts/AuthContext';
+import {
+  AuthProvider,
+  useOptionalAuthContext,
+} from '../src/contexts/AuthContext';
+import { AUTH_DISABLED } from '../src/services/firebaseConfig';
 
 /**
  * Componente de layout raiz da aplicação.
@@ -83,6 +87,11 @@ import { AuthProvider, useAuthContext } from '../src/contexts/AuthContext';
  * </RootLayout>
  */
 export default function RootLayout() {
+  // Sem configuração do Firebase: roda sem login, direto na lista de tarefas
+  if (AUTH_DISABLED) {
+    return <AppStack />;
+  }
+
   return (
     <AuthProvider>
       <RootLayoutNav />
@@ -133,7 +142,11 @@ export default function RootLayout() {
  * - Com `replace()`, /login SUBSTITUI /index no histórico → não há como voltar.
  */
 function RootLayoutNav() {
-  const { user, loading } = useAuthContext();
+  return <AppStack authEnabled />;
+}
+
+function AppStack({ authEnabled = false }: { authEnabled?: boolean }) {
+  const { user, loading } = useOptionalAuth(authEnabled);
   const segments = useSegments();
   const router = useRouter();
 
@@ -158,6 +171,8 @@ function RootLayoutNav() {
    * Todas as outras rotas (index, form, profile) são PROTEGIDAS.
    */
   useEffect(() => {
+    if (!authEnabled) return;
+
     if (loading) {
       // Ainda verificando o estado de autenticação inicial — não redireciona
       return;
@@ -173,7 +188,7 @@ function RootLayoutNav() {
       // Usuário JÁ logado tentando acessar login/register → redireciona para home
       router.replace('/');
     }
-  }, [user, loading, segments]);
+  }, [authEnabled, user, loading, segments]);
 
   /**
    * O `<Stack>` do Expo Router gerencia automaticamente:
@@ -190,16 +205,16 @@ function RootLayoutNav() {
     <Stack
       screenOptions={{
         // Cor de fundo do header — mesma em todas as telas
-        headerStyle: { backgroundColor: '#4f46e5' }, // indigo-600
+        headerStyle: { backgroundColor: '#d46c7f' }, // indigo-600
 
         // Cor do texto e ícones do header (título, botão voltar)
-        headerTintColor: '#ffffff',
+        headerTintColor: '#2d2f42',
 
         // Estilo do título no header
         headerTitleStyle: { fontWeight: 'bold' },
 
         // Cor de fundo da área de conteúdo (abaixo do header)
-        contentStyle: { backgroundColor: '#f9fafb' }, // gray-50
+        contentStyle: { backgroundColor: '#2d2f42' }, // gray-50
       }}
     >
       {/*
@@ -235,7 +250,7 @@ function RootLayoutNav() {
       <Stack.Screen
         name="index"
         options={{
-          title: '📋 Minhas Tarefas',
+          title: 'Minhas Tarefas',
         }}
       />
       <Stack.Screen
@@ -249,9 +264,15 @@ function RootLayoutNav() {
       <Stack.Screen
         name="profile"
         options={{
-          title: '👤 Meu Perfil',
+          title: 'Meu Perfil',
         }}
       />
     </Stack>
   );
+}
+
+/** Só consome o contexto quando o login está habilitado (há Provider). */
+function useOptionalAuth(enabled: boolean) {
+  const ctx = useOptionalAuthContext();
+  return enabled && ctx ? ctx : { user: null, loading: false };
 }

@@ -71,31 +71,21 @@ function FilterButton({ label, count, isActive, onPress }: FilterButtonProps) {
   return (
     <TouchableOpacity
       onPress={onPress}
-      // Estilo condicional: fundo ativo (índigo) vs. transparente
-      className={`flex-1 items-center py-2 px-1 rounded-lg ${
-        isActive ? 'bg-indigo-600' : 'bg-transparent'
+      // Estilo "abas": texto com sublinhado rosa na aba ativa
+      className={`flex-1 items-center pt-2 pb-2 border-b-2 ${
+        isActive ? 'border-rose' : 'border-transparent'
       }`}
       // accessibilityLabel melhora a experiência com leitores de tela (acessibilidade)
       accessibilityLabel={`Filtrar por ${label}: ${count} tarefa${count !== 1 ? 's' : ''}`}
-      accessibilityRole="button"
+      accessibilityRole="tab"
       accessibilityState={{ selected: isActive }}
     >
-      {/* Rótulo do filtro */}
       <Text
-        className={`text-xs font-semibold ${
-          isActive ? 'text-white' : 'text-gray-500'
+        className={`text-base ${
+          isActive ? 'font-bold text-white' : 'font-semibold text-white/50'
         }`}
       >
-        {label}
-      </Text>
-
-      {/* Badge com a contagem */}
-      <Text
-        className={`text-xs font-bold mt-0.5 ${
-          isActive ? 'text-indigo-200' : 'text-gray-400'
-        }`}
-      >
-        {count}
+        {label} ({count})
       </Text>
     </TouchableOpacity>
   );
@@ -118,7 +108,7 @@ export function FilterBar({
 }: FilterBarProps) {
   return (
     // Container com fundo cinza claro e cantos arredondados — visual de "pill group"
-    <View className="flex-row bg-gray-100 rounded-xl p-1 mx-4 mb-4 mt-3">
+    <View className="flex-row mx-4 mb-4 mt-3 border-b border-white/10">
       <FilterButton
         label="Todas"
         count={allCount}

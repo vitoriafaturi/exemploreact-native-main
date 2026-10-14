@@ -38,7 +38,7 @@ import {
 import { useRouter, Stack } from 'expo-router';
 
 import { useTasks } from '../src/hooks/useTasks';
-import { useAuthContext } from '../src/contexts/AuthContext';
+import { useOptionalAuthContext } from '../src/contexts/AuthContext';
 import { TaskItem } from '../src/components/TaskItem';
 import { FilterBar } from '../src/components/FilterBar';
 import { EmptyState } from '../src/components/EmptyState';
@@ -52,7 +52,7 @@ import { EmptyState } from '../src/components/EmptyState';
  */
 export default function HomeScreen() {
   const router = useRouter();
-  const { signOut } = useAuthContext();
+  const signOut = useOptionalAuthContext()?.signOut;
 
   // Desestrutura tudo que o hook expõe — veja src/hooks/useTasks.ts
   const {
@@ -80,9 +80,9 @@ export default function HomeScreen() {
    */
   if (loading) {
     return (
-      <View className="flex-1 items-center justify-center bg-gray-50">
-        <ActivityIndicator size="large" color="#4f46e5" />
-        <Text className="mt-3 text-gray-500 text-sm">
+      <View className="flex-1 items-center justify-center bg-navy">
+        <ActivityIndicator size="large" color="#d46c7f" />
+        <Text className="mt-3 text-white/70 text-sm">
           Carregando tarefas...
         </Text>
       </View>
@@ -112,32 +112,33 @@ export default function HomeScreen() {
        */}
       <Stack.Screen
         options={{
-          headerRight: () => (
-            <View className="flex-row gap-4">
-              {/* Botão de Perfil */}
-              <TouchableOpacity
-                onPress={() => router.push('/profile')}
-                accessibilityLabel="Abrir perfil"
-                accessibilityRole="button"
-              >
-                <Text className="text-3xl">👤</Text>
-              </TouchableOpacity>
+          headerRight: () =>
+            !signOut ? null : (
+              <View className="flex-row gap-4">
+                {/* Botão de Perfil */}
+                <TouchableOpacity
+                  onPress={() => router.push('/profile')}
+                  accessibilityLabel="Abrir perfil"
+                  accessibilityRole="button"
+                >
+                  <Text className="text-navy font-semibold">Perfil</Text>
+                </TouchableOpacity>
 
-              {/* Botão de Logout */}
-              <TouchableOpacity
-                onPress={signOut}
-                accessibilityLabel="Sair"
-                accessibilityRole="button"
-              >
-                <Text className="text-3xl">🚪</Text>
-              </TouchableOpacity>
-            </View>
-          ),
+                {/* Botão de Logout */}
+                <TouchableOpacity
+                  onPress={signOut}
+                  accessibilityLabel="Sair"
+                  accessibilityRole="button"
+                >
+                  <Text className="text-navy font-semibold">Sair</Text>
+                </TouchableOpacity>
+              </View>
+            ),
         }}
       />
 
       {/* `relative` é necessário para posicionar o FAB com `absolute` dentro */}
-      <View className="flex-1 bg-gray-50 relative">
+      <View className="flex-1 bg-navy relative">
         {/* ── BARRA DE FILTROS ──────────────────────────────────────── */}
         <FilterBar
           activeFilter={filter}
@@ -190,7 +191,7 @@ export default function HomeScreen() {
          */}
         <TouchableOpacity
           onPress={() => router.push('/form')}
-          className="absolute bottom-8 right-6 w-16 h-16 bg-indigo-600 rounded-full items-center justify-center shadow-lg"
+          className="absolute bottom-8 right-6 w-16 h-16 bg-rose rounded-full items-center justify-center shadow-lg"
           accessibilityLabel="Adicionar nova tarefa"
           accessibilityRole="button"
         >

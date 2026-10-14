@@ -274,4 +274,9 @@ export function useAuthContext(): AuthContextType {
  * import { AuthProvider } from '@/contexts/AuthContext';
  * ```
  */
+/** Versão que devolve undefined (em vez de lançar erro) fora do Provider. */
+export function useOptionalAuthContext(): AuthContextType | undefined {
+  return useContext(AuthContext);
+}
+
 export default AuthProvider;

@@ -55,20 +55,17 @@ interface EmptyStateProps {
  */
 const MESSAGES: Record<
   TaskFilter,
-  { emoji: string; title: string; subtitle: string }
+  { title: string; subtitle: string }
 > = {
   all: {
-    emoji: '📋',
     title: 'Nenhuma tarefa ainda!',
     subtitle: 'Toque no botão + para adicionar sua primeira tarefa.',
   },
   pending: {
-    emoji: '🎉',
     title: 'Tudo em dia!',
     subtitle: 'Não há tarefas pendentes. Que eficiência!',
   },
   completed: {
-    emoji: '⏳',
     title: 'Nenhuma tarefa concluída',
     subtitle: 'Conclua algumas tarefas para vê-las aqui.',
   },
@@ -88,22 +85,21 @@ const MESSAGES: Record<
  */
 export function EmptyState({ filter }: EmptyStateProps) {
   // Desestrutura o objeto de mensagem para o filtro atual
-  const { emoji, title, subtitle } = MESSAGES[filter];
+  const { title, subtitle } = MESSAGES[filter];
 
   return (
     // `flex-1` faz o container ocupar todo o espaço disponível
     // `items-center justify-center` centraliza horizontal e verticalmente
     <View className="flex-1 items-center justify-center px-8 py-16">
       {/* Emoji grande como "ilustração" simples */}
-      <Text className="text-6xl mb-4">{emoji}</Text>
 
       {/* Título da mensagem */}
-      <Text className="text-xl font-bold text-gray-700 text-center mb-2">
+      <Text className="text-xl font-bold text-white text-center mb-2">
         {title}
       </Text>
 
       {/* Subtítulo com instrução */}
-      <Text className="text-sm text-gray-400 text-center leading-5">
+      <Text className="text-sm text-white/50 text-center leading-5">
         {subtitle}
       </Text>
     </View>
